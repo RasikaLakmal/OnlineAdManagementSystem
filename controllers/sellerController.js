@@ -136,11 +136,21 @@ const addProfileImage = async (req, res) =>{
    // const email = req.body.email;
    // const profile_photo = req.file.path;
  
-    Ad.findOneAndUpdate ({
-        email: req.body.email,profile_photo: req.file.path
+    //Seller.findOneAndUpdate ({
+     //   email: req.body.email,profile_photo: req.file.path
+     console.log(req.body);
+     let id = req.params.id
+     let info = {
         
- });
-}
+         profile_photo: req.file.path
+     }
+ 
+     const sp = await Seller.update({profile_photo: req.file.path}, { where: { id: id}})
+ res.status(200).send(sp)
+ console.log(sp)
+        
+ }
+
 
 
 module.exports = {

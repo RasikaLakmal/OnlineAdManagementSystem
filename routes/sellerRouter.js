@@ -12,7 +12,7 @@ routerse.get('/getSellerAds/:email', sellerController.getSellerAds)
 
 routerse.get('/:id' , sellerController.getOneSeller)
 
-routerse.put('/:id', sellerController.updateSeller)
+routerse.put('/:id', sellerController.upload, sellerController.addProfileImage, sellerController.updateSeller)
 
 routerse.delete('/:id' , sellerController.deleteSeller)
 

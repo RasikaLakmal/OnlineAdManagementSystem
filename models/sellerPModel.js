@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
    
-    const SellerP = sequelize.define("sellerp", {
+    const SellerP = sequelize.define("sellerps", {
         email: {
             type: DataTypes.STRING,
             allowNull: false

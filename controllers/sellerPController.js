@@ -23,6 +23,7 @@ const upload = multer({
         const mimeType = fileTypes.test(file.mimetype)  
         const extname = fileTypes.test(path.extname(file.originalname))
 
+        console.log(file);
         if(mimeType && extname) {
             return cb(null, true)
         }
@@ -33,6 +34,8 @@ const upload = multer({
 
 const addSP = async (req,res) => {
 
+    console.log(req.body);
+
     let info = {
         email: req.body.email,
         profile_photo: req.file.path
@@ -41,6 +44,8 @@ const addSP = async (req,res) => {
     const sp = await SellerP.create(info)
 res.status(200).send(sp)
 console.log(sp)
+
+// res.status(200).send("OK")
 
 }
 module.exports = {
