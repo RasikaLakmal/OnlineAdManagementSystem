@@ -63,6 +63,7 @@ const deleteUser = async (req,res) => {
     let id = req.params.id
 
     await User.destroy({ where: { id: id}})
+    await Seller.destroy({ where: { id: id}})
 
     res.status(200).send('User is deleted !')
     

@@ -1,6 +1,8 @@
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser');
+require("dotenv").config(); 
+
 
 const app = express()
 
@@ -33,8 +35,8 @@ app.use(bodyParser.json())
 
 //routers
 
-const routerad = require('./routes/adRouter')
-app.use('/api/ads',routerad)
+//const routerad = require('./routes/adRouter')
+//app.use('/api/ads',routerad)
 
 const routeru = require('./routes/userRouter')
 app.use('/api/users',routeru)
@@ -42,8 +44,9 @@ app.use('/api/users',routeru)
 const routerse = require('./routes/sellerRouter')
 app.use('/api/sellers',routerse)
 
-const routersp = require('./routes/sellerPRouter')
-app.use('/api/sellerps',routersp)
+const routerf = require('./routes/routeall')
+app.use('/api/home',routerf)
+
 
 const router = require('./routes/router')
 app.use('/api',router)

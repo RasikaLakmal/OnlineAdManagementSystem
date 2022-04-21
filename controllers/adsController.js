@@ -12,10 +12,9 @@ const Review = db.review
 //1.create product
 
 const addAd = async (req,res) => {
-
+    console.log(req.body);
     let info = {
         email: req.body.email,
-        ad_id: req.body.ad_id,
         description: req.body.description,
         photos: req.file.path,
         city: req.body.city,
@@ -89,6 +88,42 @@ const getPublishedAd = async (req,res) => {
 }
 
 */
+
+
+// ads per page
+const adPerPage = async (req,res) =>{
+
+    console.log(req.ads)
+    let limit =3;
+    let offset =0;
+
+    db.ads.findAndCountAll()
+    .then((data)=>{
+        let page =req.params.page;
+        let pages = Math.ceil(data.count/limit);
+
+        offset =limit*(page-1);
+
+        db.ads.findAll({
+            attributes:['id','email','description','photos','city','phone_number','posted_date','topic','createdAt','updatedAt','category', 'price', 'ad_id'],
+            limit: limit,
+            offset: offset,
+            $sort: { id: 1 }
+        })
+        .then((users)=>{
+            res.status(200).json({'result': users, 'count': data.count, 'pages': pages});
+        });
+
+        // .catch(function (error) {
+        //     res.status(500).send('Internal Server Error');
+        // });
+
+    })
+
+
+
+}
+
 const storage = multer.diskStorage({
     destination: (req, file, cb)=> {
             cb(null,'Images/Ads')
@@ -122,6 +157,7 @@ module.exports = {
     getOneAd,
     updateAd,
     deleteAd,
+    adPerPage,
     upload
 
 }

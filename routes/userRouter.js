@@ -1,6 +1,6 @@
 const userController = require('../controllers/userController')
-
 const routeru = require('express').Router()
+const userMiddleware = require('../middleware/users.js');
 
 routeru.post('/addUser' , userController.addUser)
 
@@ -10,10 +10,10 @@ routeru.get('/published' , userController.getPublishedUser)
 
 
 
-routeru.get('/:id' , userController.getOneUser)
+routeru.get('/:id' ,userMiddleware.isLoggedIn, userController.getOneUser)
 
 //router.put('/:id', userController.updateProduct)
 
-routeru.delete('/:id' , userController.deleteUser)
+routeru.delete('/:id' ,userMiddleware.isLoggedIn, userController.deleteUser)
 
 module.exports = routeru

@@ -5,9 +5,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        ad_id: {
-            type: DataTypes.STRING,
-        },
         description: {
             type: DataTypes.TEXT,
         },

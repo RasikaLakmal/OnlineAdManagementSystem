@@ -97,7 +97,7 @@ router.post('/login', (req, res, next) => {
   
             if (bResult) {
               const token = jwt.sign({
-                  username: result[0].username,
+                  email: result[0].email,
                   userId: result[0].id
                 },
                 'SECRETKEY', {
@@ -123,7 +123,11 @@ router.post('/login', (req, res, next) => {
     );
   });
 
-//http://localhost:8080/api/secret-route
-router.get('/secret-route',(req, res, next) =>{})
+// routes/router.js
+
+router.get('/secret-route', userMiddleware.isLoggedIn, (req, res, next) => {
+  console.log(req.userData);
+  res.send('This is the secret content. Only logged in users can see that!');
+});
 
 module.exports = router;

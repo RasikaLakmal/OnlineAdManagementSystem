@@ -36,7 +36,6 @@ db.sequelize = sequelize
 db.users = require('../models/userModel')(sequelize, DataTypes)
 db.ads = require('../models/adsModel')(sequelize, DataTypes)
 db.sellers = require('../models/sellerModel')(sequelize, DataTypes)
-db.sellerps = require('../models/sellerPModel')(sequelize, DataTypes)
 
 
 db.sequelize.sync({ force: false})
@@ -44,5 +43,16 @@ db.sequelize.sync({ force: false})
 console.log('yes re-sync done!')    
 })
 
+//1 to many
+
+db.sellers.hasMany(db.ads, {
+    foreignKey: 'ad_id',
+    as: 'ads'
+})
+
+db.ads.belongsTo(db.sellers, {
+    foreignKey: 'ad_id',
+    as: 'sellers'
+})
 
 module.exports = db

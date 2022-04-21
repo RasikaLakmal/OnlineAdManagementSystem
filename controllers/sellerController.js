@@ -7,6 +7,7 @@ const path = require('path')
 
 //create main Model
 const Seller = db.sellers
+const User = db.users
 const Ad = db.ads
 
 //main work
@@ -73,6 +74,7 @@ const deleteSeller = async (req,res) => {
     let id = req.params.id
 
     await Seller.destroy({ where: { id: id}})
+    await User.destroy({ where: { id: id}})
 
     res.status(200).send('Seller is deleted !')
     
@@ -92,14 +94,14 @@ const getPublishedProduct = async (req,res) => {
 
 const getSellerAds =  async (req, res) => {
 
-    const email = req.params.email
+    //const email = req.params.email
 
-    const data = await Seller.findOne({
+    const data = await Seller.findAll({
         include: [{
             model: Ad,
             as: 'Ads'
         }],
-        where: { email: email }
+        where: { id: 2 }
     })
 
     res.status(200).send(data)
