@@ -105,7 +105,7 @@ const adPerPage = async (req,res) =>{
         offset =limit*(page-1);
 
         db.ads.findAll({
-            attributes:['id','email','description','photos','city','phone_number','posted_date','topic','createdAt','updatedAt','category', 'price', 'ad_id'],
+            attributes:['id','email','description','photos','city','phone_number','topic','createdAt','updatedAt','category', 'price', 'ad_id'],
             limit: limit,
             offset: offset,
             $sort: { id: 1 }
@@ -149,7 +149,25 @@ const upload = multer({
 }).single('photos')
 
 
+const updatePhotos = async (req, res) =>{
 
+    // const email = req.body.email;
+    // const profile_photo = req.file.path;
+  
+     //Seller.findOneAndUpdate ({
+      //   email: req.body.email,profile_photo: req.file.path
+      console.log(req.body);
+      let id = req.params.id
+      let info = {
+         
+          photos: req.file.path
+      }
+  
+      const sp = await Ad.update({photos: req.file.path}, { where: { id: id}})
+  res.status(200).send(sp)
+  console.log(sp)
+         
+  }
 
 module.exports = {
     addAd,
@@ -158,6 +176,7 @@ module.exports = {
     updateAd,
     deleteAd,
     adPerPage,
-    upload
+    upload,
+    updatePhotos
 
 }

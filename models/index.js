@@ -33,7 +33,7 @@ const db = {}
 db.Sequelize = Sequelize
 db.sequelize = sequelize
 
-db.users = require('../models/userModel')(sequelize, DataTypes)
+
 db.ads = require('../models/adsModel')(sequelize, DataTypes)
 db.sellers = require('../models/sellerModel')(sequelize, DataTypes)
 

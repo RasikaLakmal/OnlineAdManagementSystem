@@ -11,40 +11,41 @@ const router = require('./router');
 //routerse.post('/addSeller' , sellerController.addSeller)
 
 //seller
-routerse.get('/allSeller' ,userMiddleware.isLoggedIn, sellerController.getAllSellers)
+
+routerse.put('/update/:id',userMiddleware.isLoggedIn, sellerController.updateSeller) //update seller profile
+
+routerse.put('/profilepic/:id',userMiddleware.isLoggedIn,sellerController.upload,  sellerController.addProfileImage)
+
+routerse.delete('/:id',userMiddleware.isLoggedIn , sellerController.deleteSeller) //delete seller
 
 //router.get('/published' , sellerController.getP)
 
-routerse.get('/getSellerAds/:email',userMiddleware.isLoggedIn, sellerController.getSellerAds)
 
-routerse.get('/:id' ,userMiddleware.isLoggedIn, sellerController.getOneSeller)
-
-routerse.put('/:id',userMiddleware.isLoggedIn,  sellerController.upload, sellerController.addProfileImage, sellerController.updateSeller)
-
-routerse.delete('/:id',userMiddleware.isLoggedIn , sellerController.deleteSeller)
-
-
-
-
-//ads
+//ads by auth seller
 
 routerse.post('/ads/addAd' , adController.upload , adController.addAd)
 
-routerse.get('/ads/allAd' , adController.getAllAds)
+routerse.delete('/ads/delete/:id' ,userMiddleware.isLoggedIn, adController.deleteAd)
+
+routerse.put('/ads/update/:id',userMiddleware.isLoggedIn,adController.updateAd)
+
+routerse.put('/ads/photos/:id',userMiddleware.isLoggedIn, adController.upload,adController.updatePhotos)
 
 //router.get('/published' , productController.getPublishedProduct)
 
-
-
 routerse.get('/ads/:id' ,userMiddleware.isLoggedIn, adController.getOneAd)
 
-routerse.put('/ads/update/:id',userMiddleware.isLoggedIn, adController.updateAd)
 
-routerse.delete('/ads/delete/:id' ,userMiddleware.isLoggedIn, adController.deleteAd)
+//user
+routerse.get('/allSeller' , sellerController.getAllSellers)
+
+routerse.get('/ads/allAd' , adController.getAllAds) //all ads
+
+routerse.get('/:id' , sellerController.getOneSeller) //get seller profile by user
 
 
 //get seller ads
 
-routerse.get('/getSellerAds',sellerController.getSellerAds)
+routerse.get('/getSellerAds/:email', sellerController.getSellerAds)
 
 module.exports = routerse

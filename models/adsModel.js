@@ -17,9 +17,6 @@ module.exports = (sequelize, DataTypes) => {
         phone_number: {
             type: DataTypes.STRING,
         },
-        posted_date: {
-            type: DataTypes.DATE,
-        },
         topic: {
             type: DataTypes.STRING,
         },

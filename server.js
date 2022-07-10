@@ -35,11 +35,10 @@ app.use(bodyParser.json())
 
 //routers
 
-//const routerad = require('./routes/adRouter')
-//app.use('/api/ads',routerad)
+const routerad = require('./routes/adRouter')
+app.use('/api/ads',routerad)
 
-const routeru = require('./routes/userRouter')
-app.use('/api/users',routeru)
+
 
 const routerse = require('./routes/sellerRouter')
 app.use('/api/sellers',routerse)

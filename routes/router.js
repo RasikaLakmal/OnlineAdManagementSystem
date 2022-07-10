@@ -10,7 +10,7 @@ const userMiddleware = require('../middleware/users.js');
 //http://localhost:8080/api/sign-up
 router.post('/sign-up', userMiddleware.validateRegister, (req, res, next) => {
     db.query(
-      `SELECT * FROM users WHERE LOWER(email) = LOWER(${db.escape(
+      `SELECT * FROM sellers WHERE LOWER(email) = LOWER(${db.escape(
         req.body.email
       )});`,
       (err, result) => {
@@ -27,20 +27,20 @@ router.post('/sign-up', userMiddleware.validateRegister, (req, res, next) => {
               });
             } else {
               // has hashed pw => add to database
-              db.query(
-                `INSERT INTO users (id, email, password, createdAt , updatedAt) VALUES ('${db.escape(
-                  )}', ${db.escape(
-                  req.body.email
-                )}, ${db.escape(hash)}, now() , now())`,
-                (err, result) => {
-                  if (err) {
-                    throw err;
-                    return res.status(400).send({
-                      msg: err
-                    });
-                  }
+              // db.query(
+              //   `INSERT INTO users (id, email, password, createdAt , updatedAt) VALUES ('${db.escape(
+              //     )}', ${db.escape(
+              //     req.body.email
+              //   )}, ${db.escape(hash)}, now() , now())`,
+              //   (err, result) => {
+              //     if (err) {
+              //       throw err;
+              //       return res.status(400).send({
+              //         msg: err
+              //       });
+              //     }
                   db.query(
-                    `INSERT INTO sellers (id, email, password, first_name, last_name, phone_number, createdAt , updatedAt) VALUES ('${db.escape(
+                    `INSERT INTO sellers (id, email, password, first_name, last_name, phone_number,city, createdAt , updatedAt) VALUES ('${db.escape(
                         )}', ${db.escape(
                         req.body.email
                       )}, ${db.escape(hash)}, ${db.escape(
@@ -49,15 +49,17 @@ router.post('/sign-up', userMiddleware.validateRegister, (req, res, next) => {
                         req.body.last_name
                       )},${db.escape(
                         req.body.phone_number
+                      )},${db.escape(
+                        req.body.city
                       )}, now() , now())`
                   );
                   return res.status(201).send({
                     msg: 'Registered!'
                   });
                 }
-              );
+              
             }
-          });
+          );
         }
       }
     );
@@ -66,7 +68,7 @@ router.post('/sign-up', userMiddleware.validateRegister, (req, res, next) => {
 //http://localhost:8080/api/login
 router.post('/login', (req, res, next) => {
     db.query(
-      `SELECT * FROM users WHERE email = ${db.escape(req.body.email)};`,
+      `SELECT * FROM sellers WHERE email = ${db.escape(req.body.email)};`,
       (err, result) => {
         // user does not exists
         if (err) {
@@ -111,7 +113,7 @@ router.post('/login', (req, res, next) => {
               return res.status(200).send({
                 msg: 'Logged in!',
                 token,
-                user: result[0]
+                //user: result[0]
               });
             }
             return res.status(401).send({
